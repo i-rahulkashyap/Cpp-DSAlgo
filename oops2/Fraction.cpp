@@ -61,4 +61,93 @@ class Fraction{
 		denominator=denominator*f2.denominator;
 		simplify();
 	}
+//______________________________________________OPERATOR OVERLOADING BEGINS______________________________________________//
+	//ADD
+	//MULTIPLY
+	//check i.e ==
+	//preincrement ++f1;
+	//postincrement f1++; nesting here make no sense since (f1++)++ becoz f1++ if f1 and again ++ of this will be f1 
+	//+=...... i.e f1+=f2; add and updating the result in this
+	
+
+	//ADD f3=f1+f2;
+	//this function can be const since it is not making any changes into "this" 
+	Fraction operator+(Fraction const &f2) const{
+		int lcm=denominator *f2.denominator;
+		int x=lcm/denominator;
+		int y=lcm/f2.denominator;
+		int num=x*numerator +(y * f2.numerator);
+		
+		Fraction fNew(num,lcm);
+		fNew.simplify();
+		return fNew;
+	}
+	
+	//Multiply 
+	//it is also can be constant
+	Fraction operator*(Fraction const &f2) const{
+	int n=numerator*f2.numerator;
+	int d=denominator*f2.denominator;
+	Fraction fNew(n,d);
+	fNew.simplify();
+	return fNew;
+	
+	}
+	
+	//Double equal check ==
+	//this function can also be a const
+	bool operator==(Fraction const &f2) const{
+		return(numerator==f2.numerator && denominator==f2.denominator);
+	
+	}
+	
+	//preincrement
+	//this function can not be const since no argument so changes will be reflected back to the calling object that is via "this" change will done
+	//can also be retured as reference to avoid buffer
+	Fraction& operator++(){
+		numerator=numerator+denominator; //here change in this ka numerator;
+	simplify();
+	return *this;
+	
+	}
+	
+	//PostIncrement
+	Fraction operator++(int){
+	//here change will be reflected to same object and passed the previous value 
+	Fraction fNew(numerator,denominator); //passed before change
+	numerator =numerator+denominator; //general change
+	simplify(); //simplify on changed (on "this")
+	fNew.simplify(); //simplify on passed
+	return fNew;
+	
+	
+	
+	}
+	//+=
+	Fraction operator+=(Fraction const &f2){
+		int lcm=denominator *f2.denominator;
+		int x=lcm/denominator;
+		int y=lcm/f2.denominator;
+		int num=x*numerator+ (y * f2.numerator);
+		numerator =num;
+		denominator=lcm;
+		simplify();
+		
+		return *this;
+	
+	
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+//______________________________________________OPERATOR OVERLOADING ENDS HERE___________________________________________//
 };
